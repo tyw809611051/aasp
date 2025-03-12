@@ -1,0 +1,4 @@
+Django>=4.2.0
+mysqlclient>=2.1.0
+djangorestframework>=3.14.0
+PyJWT>=2.8.0  # 用于处理JWT token 

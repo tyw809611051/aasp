@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0  # 使用 MySQL 8.0 镜像
+    container_name: mysql8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword         # 设置 root 用户的密码
+      MYSQL_DATABASE: django_db         # 创建一个默认数据库
+      MYSQL_USER: django                 # 创建一个新用户
+      MYSQL_PASSWORD: django         # 设置新用户的密码
+    ports:
+      - "3306:3306"  # 将容器的 3306 端口映射到本地的 3306 端口
+    volumes:
+      - mysql_data:/var/lib/mysql  # 持久化 MySQL 数据
+
+volumes:
+  mysql_data:
