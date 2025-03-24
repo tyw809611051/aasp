@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     # Third party apps
     "rest_framework",
+    "corsheaders",
     
     # Local apps
     "api",
@@ -49,12 +50,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "api.middleware.TokenAuthMiddleware",  # 添加token认证中间件
+    "api.middleware.TokenAuthMiddleware",  # 用户token认证中间件
+    "api.admin_middleware.AdminAuthMiddleware",  # 管理员token认证中间件
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -157,3 +160,37 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 允许上传的文件类型
 ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif']
 ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/mpeg', 'video/quicktime']
+
+# 添加CORS配置
+CORS_ALLOW_ALL_ORIGINS = True  # 允许所有来源的跨域请求
+# 或者，如果您想限制特定的来源：
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+
+# 允许的HTTP方法
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+# 允许的HTTP头
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+# 允许凭证（cookies等）
+CORS_ALLOW_CREDENTIALS = True

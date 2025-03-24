@@ -134,3 +134,14 @@ class AaspPersonalityDetection(models.Model):
     class Meta:
         db_table = 'aasp_personality_detection'
         verbose_name = '性格检测'
+
+class AaspAdmin(models.Model):
+    username = models.CharField(max_length=255, unique=True, verbose_name='管理员用户名')
+    password = models.CharField(max_length=128, verbose_name='密码')
+    is_super = models.BooleanField(default=False, verbose_name='是否超级管理员')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'aasp_admin'
+        verbose_name = '管理员表'

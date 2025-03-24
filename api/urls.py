@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     hello_world, 
     register, 
@@ -29,4 +29,7 @@ urlpatterns = [
     path('attention', get_attention_detection, name='get-attention-detection'),
     path('pain', get_pain_detection, name='get-pain-detection'),
     path('personality', get_personality_detection, name='get-personality-detection'),
+    
+    # 管理员接口
+    path('admin/', include('api.admin_urls')),
 ] 

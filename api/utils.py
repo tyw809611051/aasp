@@ -44,4 +44,27 @@ def error_response(message='error', code=400, data=''):
         'code': code,
         'message': message,
         'data': data
-    }) 
+    })
+
+def generate_admin_token(admin_id, is_super=False):
+    """生成管理员JWT token"""
+    expire_time = datetime.utcnow() + timedelta(days=1)  # token有效期1天
+    payload = {
+        'admin_id': admin_id,
+        'is_super': is_super,
+        'exp': expire_time
+    }
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+    # 计算过期时间（秒）
+    expire_in = int((expire_time - datetime.utcnow()).total_seconds())
+    return token, expire_in
+
+def verify_admin_token(token):
+    """验证管理员JWT token"""
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+        return payload.get('admin_id'), payload.get('is_super', False)
+    except jwt.ExpiredSignatureError:
+        return None, False
+    except jwt.InvalidTokenError:
+        return None, False 
